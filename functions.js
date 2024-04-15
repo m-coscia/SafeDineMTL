@@ -5,6 +5,7 @@ var map = L.map('map').setView([45.49650, -73.57879], 18);
 var tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 25,
 }).addTo(map);
+L.control.attribution().remove();
 
 // attribute for the safety of a restaurant
 const Status = {
@@ -42,7 +43,52 @@ var restaurants = [
 ];
 
 // variable to store list of markers
-var markersArr = [];
+var markers = [];
+
+// variable to store pop-up windows for markers
+var popUps = [];
+
+// marker icons to be used
+var greenIcon = L.icon({
+    iconUrl: 'green-marker-icon.svg',
+    iconSize:     [24, 32], // size of the icon
+    iconAnchor:   [12, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
+});
+var redIcon = L.icon({
+    iconUrl: 'red-marker-icon.svg',
+    iconSize:     [24, 32], // size of the icon
+    iconAnchor:   [12, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
+});
+
+var marker = L.marker([restaurants[0].latitude, restaurants[0].longitude], {icon: greenIcon}).addTo(map).bindPopup("test");
+var marker = L.marker([restaurants[1].latitude, restaurants[1].longitude], {icon: redIcon}).addTo(map).bindPopup("test");
+
+
+
+
+
+
+function initializeMarkers(locationArray, markerArray) {
+    for(location in locationArray){
+        let loc = [location.latitude, location.longitude];
+        let status = location.status;
+        //choosing color of marker
+        switch(status){
+            case Status.Safe:
+
+        }
+
+        var marker = L.marker([loc[0], loc[1]]).addTo(map);
+        markerArray.push(marker);
+
+    }
+    
+}
+
+
+
 
 // test: adding marker
 var marker = L.marker([45.49728, -73.57890]).addTo(map);
