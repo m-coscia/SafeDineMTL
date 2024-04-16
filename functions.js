@@ -61,81 +61,45 @@ var redIcon = L.icon({
     iconAnchor:   [12, 32], // point of the icon which will correspond to marker's location
     popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
 });
-// var style = greenIcon;//{icon: greenIcon};
 // var marker = L.marker([restaurants[0].latitude, restaurants[0].longitude], style).addTo(map).bindPopup('hello');
-// var marker = L.marker([restaurants[1].latitude, restaurants[1].longitude], {icon: style}).addTo(map).bindPopup("test");
 
+
+//INITIALIZING MARKERS ONTO MAP
 for(let i = 0; i < restaurants.length; i++){
     var resto = restaurants[i];
     var loc = [resto.latitude, resto.longitude];
-    var name = resto.name;
+    var locName = resto.name;
     var locStatus = resto.status;
-    var numViolations = resto.numViolations;
+    var locNumViolations = resto.numViolations;
     var iconStyle;
+    var statusString = "";
+    var statusColor = "";
 
     // choosing color of marker
     switch(locStatus){
         case Status.Safe:
             iconStyle = greenIcon;
+            statusString = "Safe";
+            statusColor = "backgroundGreen";
             break;
         case Status.Unsafe:
             iconStyle = redIcon;
+            statusString = "Unsafe"
+            statusColor = "backgroundRed";
             break;
     }
 
     //create popup window
-
-
+    var contentString = '<h1 class="text-center text-base font-bold pb-0">'+locName+'</h1>\n'+
+                        '<p class="text-center text-white rounded '+statusColor+'">'+statusString+'</p>\n'+
+                        '<p class="text-center m-0">'+locNumViolations+' offences</p>';
+    popUps.push([locName], contentString);
+    
     // create the marker
-    var marker = L.marker([loc[0], loc[1]], {icon: iconStyle}).addTo(map);
+    var marker = L.marker([loc[0], loc[1]], {icon: iconStyle});
+    markers.push([locName, marker]);
 
-    markers.push(marker);
-
-
-
-
-
-    console.log(name + " " + numViolations);
+    //add content to map
+    marker.addTo(map).bindPopup(contentString);
 }
 
-
-
-
-
-function initializeMarkers() {
-    for(let i = 0; i < restaurants.length; i++){
-        var location = restaurants[0];
-        var loc = [location.latitude, location.longitude];
-        var name = location.name;
-        var locStatus = location.status;
-        var numViolations = location.numViolations;
-        var iconStyle;
-
-        // choosing color of marker
-        switch(status){
-            case Status.Safe:
-                iconStyle = greenIcon;
-                break;
-            case Status.Unsafe:
-                iconStyle = redIcon;
-                break;
-        }
-
-        // create the marker
-        var marker = L.marker([loc[0], loc[1]], {icon: iconStyle});
-
-        // add marker to marker array
-        markers.push(marker);
-
-        marker.addTo(map);
-    }
-}
-
-// markers = initializeMarkers(restaurants);
-// console.log(markers.length);
-
-
-
-
-// test: adding marker
-//var marker = L.marker([45.49728, -73.57890]).addTo(map);
