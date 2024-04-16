@@ -1,3 +1,4 @@
+/* SETTING UP FOR MARKERS */
 // initializing map
 const map = L.map('map').setView([45.49650, -73.57879], 18);
 
@@ -42,8 +43,9 @@ var restaurants = [
     {name: 'Van Houtte', latitude: 45.4954239, longitude: -73.5777120, status: Status.Safe, numViolations: 0},
 ];
 
-// variable to store list of markers
-var markers = [];
+// variables to store list of markers
+var fg_SafeResto = L.featureGroup();
+var fg_UnsafeResto = L.featureGroup();
 
 // variable to store pop-up windows for markers
 var popUps = [];
@@ -61,10 +63,9 @@ var redIcon = L.icon({
     iconAnchor:   [12, 32], // point of the icon which will correspond to marker's location
     popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
 });
-// var marker = L.marker([restaurants[0].latitude, restaurants[0].longitude], style).addTo(map).bindPopup('hello');
 
 
-//INITIALIZING MARKERS ONTO MAP
+/* INITIALIZING MARKERS ONTO MAP */
 for(let i = 0; i < restaurants.length; i++){
     var resto = restaurants[i];
     var loc = [resto.latitude, resto.longitude];
@@ -96,10 +97,27 @@ for(let i = 0; i < restaurants.length; i++){
     popUps.push([locName], contentString);
     
     // create the marker
-    var marker = L.marker([loc[0], loc[1]], {icon: iconStyle});
-    markers.push([locName, marker]);
+    var marker = L.marker([loc[0], loc[1]], {icon: iconStyle}).bindPopup(contentString);
+    
+    //add marker to feature group
+    switch(locStatus){
+        case Status.Safe:
+            fg_SafeResto.addLayer(marker);
 
-    //add content to map
-    marker.addTo(map).bindPopup(contentString);
+            break;
+        case Status.Unsafe:
+            fg_UnsafeResto.addLayer(marker);
+            break;
+    }
 }
+//add content to map
+fg_SafeResto.addTo(map);
+fg_UnsafeResto.addTo(map);
+
+
+
+/* ADDING FILTER LOGIC TO BUTTONS ON MAP */
+// filtering for unsafe
+
+
 
