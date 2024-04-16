@@ -1,5 +1,5 @@
 // initializing map
-var map = L.map('map').setView([45.49650, -73.57879], 18);
+const map = L.map('map').setView([45.49650, -73.57879], 18);
 
 // adding map styling
 var tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -17,7 +17,7 @@ const Status = {
 var restaurants = [
     {name: 'Allons Burger', latitude: 45.4964506, longitude: -73.5786648, status: Status.Safe, numViolations: 0},
     {name: 'Poulet Rouge', latitude: 45.4947498, longitude: -73.5784050, status: Status.Safe, numViolations: 0},
-    {name: 'Antep Kebab', latitude: 45.4952512, longitude: -73.5795704, status: Status.Safe, numViolations: 2}, 
+    {name: 'Antep Kebab', latitude: 45.4952512, longitude: -73.5795704, status: Status.Unsafe, numViolations: 2}, 
     {name: 'Shifu', latitude: 45.4964427, longitude: -73.5785902, status: Status.Safe, numViolations: 0},
     {name: 'Yi Fang Tea', latitude: 45.4963869, longitude: -73.5786988, status: Status.Safe, numViolations: 0},
     {name: 'Mr Tantuni', latitude: 45.4962498, longitude: -73.5787705, status: Status.Safe, numViolations: 0},
@@ -61,34 +61,81 @@ var redIcon = L.icon({
     iconAnchor:   [12, 32], // point of the icon which will correspond to marker's location
     popupAnchor:  [0, -32] // point from which the popup should open relative to the iconAnchor
 });
+// var style = greenIcon;//{icon: greenIcon};
+// var marker = L.marker([restaurants[0].latitude, restaurants[0].longitude], style).addTo(map).bindPopup('hello');
+// var marker = L.marker([restaurants[1].latitude, restaurants[1].longitude], {icon: style}).addTo(map).bindPopup("test");
 
-var marker = L.marker([restaurants[0].latitude, restaurants[0].longitude], {icon: greenIcon}).addTo(map).bindPopup("test");
-var marker = L.marker([restaurants[1].latitude, restaurants[1].longitude], {icon: redIcon}).addTo(map).bindPopup("test");
+for(let i = 0; i < restaurants.length; i++){
+    var resto = restaurants[i];
+    var loc = [resto.latitude, resto.longitude];
+    var name = resto.name;
+    var locStatus = resto.status;
+    var numViolations = resto.numViolations;
+    var iconStyle;
 
-
-
-
-
-
-function initializeMarkers(locationArray, markerArray) {
-    for(location in locationArray){
-        let loc = [location.latitude, location.longitude];
-        let status = location.status;
-        //choosing color of marker
-        switch(status){
-            case Status.Safe:
-
-        }
-
-        var marker = L.marker([loc[0], loc[1]]).addTo(map);
-        markerArray.push(marker);
-
+    // choosing color of marker
+    switch(locStatus){
+        case Status.Safe:
+            iconStyle = greenIcon;
+            break;
+        case Status.Unsafe:
+            iconStyle = redIcon;
+            break;
     }
-    
+
+    //create popup window
+
+
+    // create the marker
+    var marker = L.marker([loc[0], loc[1]], {icon: iconStyle}).addTo(map);
+
+    markers.push(marker);
+
+
+
+
+
+    console.log(name + " " + numViolations);
 }
 
 
 
 
+
+function initializeMarkers() {
+    for(let i = 0; i < restaurants.length; i++){
+        var location = restaurants[0];
+        var loc = [location.latitude, location.longitude];
+        var name = location.name;
+        var locStatus = location.status;
+        var numViolations = location.numViolations;
+        var iconStyle;
+
+        // choosing color of marker
+        switch(status){
+            case Status.Safe:
+                iconStyle = greenIcon;
+                break;
+            case Status.Unsafe:
+                iconStyle = redIcon;
+                break;
+        }
+
+        // create the marker
+        var marker = L.marker([loc[0], loc[1]], {icon: iconStyle});
+
+        // add marker to marker array
+        markers.push(marker);
+
+        marker.addTo(map);
+    }
+}
+
+// markers = initializeMarkers(restaurants);
+// console.log(markers.length);
+
+
+
+
 // test: adding marker
-var marker = L.marker([45.49728, -73.57890]).addTo(map);
+//var marker = L.marker([45.49728, -73.57890]).addTo(map);
