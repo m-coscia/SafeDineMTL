@@ -25,11 +25,11 @@
                 font-family: "Space Grotesk", sans-serif;
                 font-weight: 500;
             }
-            #header, .backgroundGreen {
+            #header, .backgroundGreen, button#safeResto:hover {
                 background-color: #07c06a;
             }
 
-            .backgroundRed {
+            .backgroundRed, button#unsafeResto:hover {
                 background-color: #c02307;
             }
 
@@ -102,12 +102,19 @@
                     <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-black hover:text-white font-medium rounded-lg text-sm px-4 py-1">Search</button>
                 </div>
             </form>
-            
         </div>
-                    
 
 
         <div class="z-0">
+            <div class="z-40 absolute w-screen p-2 flex justify-end">
+                <button class="bg-black text-white font-bold py-2 px-4 rounded-full mx-2" id="safeResto">
+                    Safe Dining
+                </button>
+                <button class="bg-black text-white font-bold py-2 px-4 rounded-full ml-1 mr-5" id="unsafeResto">
+                    Unsafe Dining
+                </button>
+            </div>
+            
             <!--map container-->
             <div class="z-10" id="map" style="height: 100vh;">
             </div>
