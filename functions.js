@@ -103,7 +103,6 @@ for(let i = 0; i < restaurants.length; i++){
     switch(locStatus){
         case Status.Safe:
             fg_SafeResto.addLayer(marker);
-
             break;
         case Status.Unsafe:
             fg_UnsafeResto.addLayer(marker);
@@ -117,7 +116,23 @@ fg_UnsafeResto.addTo(map);
 
 
 /* ADDING FILTER LOGIC TO BUTTONS ON MAP */
-// filtering for unsafe
-
-
+// reset filtering with all restaurants
+document.getElementById("allRestos").addEventListener("click", function(){
+    map.addLayer(fg_SafeResto);
+    map.addLayer(fg_UnsafeResto);
+});
+//filtering for safe dining button
+document.getElementById("safeResto").addEventListener("click", function(){
+    map.addLayer(fg_SafeResto);
+    if(map.hasLayer(fg_UnsafeResto)){
+        map.removeLayer(fg_UnsafeResto);
+    }
+});
+//filtering for unsafe dining button
+document.getElementById("unsafeResto").addEventListener("click", function(){
+    map.addLayer(fg_UnsafeResto);
+    if(map.hasLayer(fg_SafeResto)){
+        map.removeLayer(fg_SafeResto);
+    }
+});
 
