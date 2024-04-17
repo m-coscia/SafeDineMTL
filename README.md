@@ -1,4 +1,5 @@
 # SafeDineMTL
+A map-based application that informs users of health and safety violations over the last 5 years in restaurants across Montreal, which allows users to make informed choices about the establishments they frequent, and prevent illness and hospitalization from unsanitary conditions (hence the name SafeDineMTL).
 
 ## Team Member
 - Victor Vasconcelos (ID: 40177135)
@@ -24,3 +25,6 @@ https://github.com/m-coscia/SafeDineMTL/assets/95299392/061d3f3e-2c16-4ce9-9ece-
 2. Open the extracted folder in the code editor / IDE of your choice
 3. Run `npm install tailwindcss@latest` in the terminal of your code editor / IDE
 4. Open the `index.html` file into the web browser of your choice
+
+## Technologies Used
+HTML, Tailwind (CSS Framework), and Vanilla JavaScript
